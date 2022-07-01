@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatable" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TV Shows</title>
+    </head>
+    <body>
+        <h1>Howdy, {{session['first_name']}}!!!</h1>
+        <h2>All TV Shows</h2>
+        <table>
+            <tr>
+                <th>  Title  </th>
+                <th>  Network  </th>
+                <th>  Release Date  </th>
+                <th>  Actions  </th>
+            </tr>
+            {% for show in liked_shows %}
+                <tr>
+                    <td>{{show.title}}</td>
+                    <td>{{show.network}}</td>
+                    <td>{{show.release_date}}</td>
+                    <td><a href="/likes/unlike/{{session['user_id']}}/{{show.id}}"> unlike </a>
+                    <td><a href="/shows/{{show.id}}"> show </a>
+                        {% if show.user_id == session['user_id'] %}
+                            <a href="/shows/edit/{{show.id}}"> | edit </a>
+                            <a href="/shows/delete/{{show.id}}"> | delete </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            {% for show in not_liked_shows %}
+                <tr>
+                    <td>{{show.title}}</td>
+                    <td>{{show.network}}</td>
+                    <td>{{show.release_date}}</td>
+                    <td><a href="/likes/like/{{session['user_id']}}/{{show.id}}"> like </a>
+                    <td><a href="/shows/{{show.id}}"> show </a>
+                        {% if show.user_id == session['user_id'] %}
+                            <a href="/shows/edit/{{show.id}}"> | edit </a>
+                            <a href="/shows/delete/{{show.id}}"> | delete </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table><br><br>
+        <a href="/shows/new">Add a New Show</a><br><br>
+        <a href="/users/logout">Logout</a>
+    </body>
+</html>
